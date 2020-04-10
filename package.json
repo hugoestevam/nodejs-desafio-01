@@ -24,7 +24,8 @@
   "homepage": "https://github.com/hugoestevam/nodejs-desafio-01#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "uuidv4": "^6.0.7"
   },
   "devDependencies": {
     "jest": "^25.3.0",
