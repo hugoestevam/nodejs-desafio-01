@@ -97,4 +97,30 @@ describe("Repositories", () => {
             likes: 0
         });
     });
+
+    it("should be able to delete the repository", async () => {
+        const response = await request(app)
+          .post("/repositories")
+          .send({
+            url: "https://github.com/hugoestevam/OptimusPrime",
+            title: "OptimusPrime",
+            techs: ["HTML", "CSS", "TypeScript", "C#"]
+        });
+    
+        await request(app)
+          .delete(`/repositories/${response.body.id}`)
+          .expect(204);
+    
+        const repositories = await request(app).get("/repositories");
+    
+        const repository = repositories.body.find(r => r.id === response.body.id);
+    
+        expect(repository).toBe(undefined);
+      });
+
+      it("should not be able to delete a repository that does not exist", async () => {
+        await request(app)
+          .delete(`/repositories/123`)
+          .expect(400);
+      });
 });
