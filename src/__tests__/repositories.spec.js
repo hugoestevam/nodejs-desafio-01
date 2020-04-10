@@ -22,4 +22,28 @@ describe("Repositories", () => {
       });
     });
 
+    it("Should be able to list the repositories", async () => {
+        const repository = await request(app)
+        .post("/repositories")
+        .send({
+            url: "https://github.com/hugoestevam/OptimusPrime",
+            title: "OptimusPrime",
+            techs: ["HTML", "CSS", "TypeScript", "C#"]
+        });
+    
+        const response = await request(app).get("/repositories");
+    
+        expect(response.body).toEqual(
+          expect.arrayContaining([
+            {
+                id: repository.body.id,
+                url: "https://github.com/hugoestevam/OptimusPrime",
+                title: "OptimusPrime",
+                techs: ["HTML", "CSS", "TypeScript", "C#"],
+                likes: 0
+            }
+          ])
+        );
+      });
+
 });
